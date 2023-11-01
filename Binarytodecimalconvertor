@@ -1,0 +1,58 @@
+package com.beans;
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+public class BinaryToDecimalConverter {
+public static void main(String[] args) {
+	SwingUtilities.invokeLater(()->{
+		createAndShowGUI();
+	});
+}
+private static void createAndShowGUI() {
+	JFrame frame=new JFrame("BinarytoDecimalConvertor");
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setSize(300,150);
+	frame.setLayout(new FlowLayout());
+	JLabel binaryLabel=new JLabel("Binary Number:");
+	JTextField binaryfield=new JTextField(20);
+	JButton convertButton=new JButton("Convert:");
+	JLabel resultlabel=new JLabel("Decimal Result:");
+	frame.add(binaryLabel);
+	frame.add(binaryfield);
+	frame.add(convertButton);
+	frame.add(resultlabel);
+	convertButton.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String binaryInput=binaryfield.getText();
+			try {
+				long decimalresult=0;
+				for(int i=0;i<binaryInput.length();i++) {
+					char digit=binaryInput.charAt(i);
+					if(digit=='1') {
+						decimalresult=decimalresult*2+1;
+					}else if(digit=='0') {
+						decimalresult=decimalresult*2;
+					}else {
+						throw new NumberFormatException("Invalid binary input");
+					}
+				}
+				resultlabel.setText("Decimal Result:"+decimalresult);
+			}catch(NumberFormatException ex) {
+				resultlabel.setText("Invalid binary input");
+			}		
+		}
+	});
+	frame.setVisible(true);
+}
+}    
+
